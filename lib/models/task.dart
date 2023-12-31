@@ -12,7 +12,7 @@ class Task extends Equatable {
     required this.title,
     this.isDone = false,
     this.isDeleted = false,
-  }): id = const Uuid().v4();
+  }) : id = const Uuid().v4();
 
   Task copyWith({
     String? title,
@@ -43,9 +43,5 @@ class Task extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
-        title,
-        isDone,
-        isDeleted,
-      ];
+  List<Object?> get props => [id];
 }
