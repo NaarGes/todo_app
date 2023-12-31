@@ -8,7 +8,6 @@ void main() {
   BlocOverrides.runZoned(
     () => runApp(const MyApp()),
   );
-  ;
 }
 
 class MyApp extends StatelessWidget {
@@ -24,6 +23,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: const TasksScreen(),
+        debugShowCheckedModeBanner: false,
       ),
     );
   }
