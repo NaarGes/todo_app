@@ -12,11 +12,15 @@ class TaskList extends StatelessWidget {
     return ListView.builder(
       itemCount: taskList.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(taskList[index].title),
-          trailing: Checkbox(
-            onChanged: (_) => context.read<TasksBloc>().add(UpdateTask(task: taskList[index])),
-            value: taskList[index].isDone,
+        return Dismissible(
+          onDismissed: (_) => context.read<TasksBloc>().add(DeleteTask(task: taskList[index])),
+          key: ValueKey(taskList[index].id),
+          child: ListTile(
+            title: Text(taskList[index].title),
+            trailing: Checkbox(
+              onChanged: (_) => context.read<TasksBloc>().add(UpdateTask(task: taskList[index])),
+              value: taskList[index].isDone,
+            ),
           ),
         );
       },

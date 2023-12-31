@@ -18,12 +18,14 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   }
 
   FutureOr<void> _onAddTask(AddTask event, Emitter<TasksState> emit) {
+    print('TasksBloc: AddTask event is handled');
     emit(TasksState(allTasks: List.from(state.allTasks)..add(event.task)));
     // final state = this.state;
     // emit(TasksState(allTasks: List.from(state.allTasks)..add(event.task)));
   }
 
   FutureOr<void> _onUpdateTask(UpdateTask event, Emitter<TasksState> emit) {
+    print('TasksBloc: UpdateTask event is handled');
     int index = state.allTasks.indexOf(event.task);
 
     emit(
@@ -36,6 +38,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   }
 
   FutureOr<void> _onDeleteTask(DeleteTask event, Emitter<TasksState> emit) {
-    // todo: implement
+    print('TasksBloc: DeleteTask event is handled');
+    emit(TasksState(allTasks: List.from(state.allTasks)..remove(event.task)));
   }
 }

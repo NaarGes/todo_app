@@ -1,16 +1,18 @@
 import 'package:equatable/equatable.dart';
+import 'package:uuid/uuid.dart';
 
 // ignore: must_be_immutable
 class Task extends Equatable {
+  final String id;
   final String title;
   final bool isDone;
   final bool isDeleted;
 
-  const Task({
+  Task({
     required this.title,
     this.isDone = false,
     this.isDeleted = false,
-  });
+  }): id = const Uuid().v4();
 
   Task copyWith({
     String? title,
