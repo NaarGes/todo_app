@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:todo_app/models/task.dart';
 
 import 'blocs/bloc_exports.dart';
 import 'screens/tasks_screen.dart';
@@ -22,9 +21,7 @@ class MyApp extends StatelessWidget {
       create: (context) => TasksBloc(),
       child: MaterialApp(
         title: 'Flutter Todo App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: ThemeData(primarySwatch: Colors.blue),
         home: const TasksScreen(),
         debugShowCheckedModeBanner: false,
       ),
