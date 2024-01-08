@@ -51,7 +51,7 @@ class _TabsScreenState extends State<TabsScreen> {
       ),
       drawer: const AppDrawer(),
       body: _pageDetails[_selectedPageIndex]['pageName'],
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: _selectedPageIndex != 0 ? null : FloatingActionButton(
         onPressed: () => _addTask(context),
         tooltip: 'Add Task',
         child: const Icon(Icons.add),
@@ -62,7 +62,7 @@ class _TabsScreenState extends State<TabsScreen> {
           _selectedPageIndex = index;
         }),
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Pending Tasks'),
+          BottomNavigationBarItem(icon: Icon(Icons.incomplete_circle_sharp), label: 'Pending Tasks'),
           BottomNavigationBarItem(icon: Icon(Icons.done), label: 'Compelete Tasks'),
           BottomNavigationBarItem(icon: Icon(Icons.favorite), label: 'Favorite Tasks'),
         ],

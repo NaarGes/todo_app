@@ -27,7 +27,8 @@ class AppDrawer extends StatelessWidget {
                   child: ListTile(
                     leading: const Icon(Icons.folder_special),
                     title: const Text('My Tasks'),
-                    trailing: Text(state.allTasks.length.toString()),
+                    trailing: Text(
+                        '${state.pendingTasks.length} | ${state.completedTasks.length}'),
                   ),
                 );
               },
