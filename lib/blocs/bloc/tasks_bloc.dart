@@ -7,6 +7,7 @@ import 'package:todo_app/models/task.dart';
 import '../bloc_exports.dart';
 
 part 'tasks_event.dart';
+
 part 'tasks_state.dart';
 
 class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
@@ -14,11 +15,15 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
     on<AddTask>(_onAddTask);
     on<UpdateTask>(_onUpdateTask);
     on<DeleteTask>(_onDeleteTask);
+    on<RemoveTask>(_onRemoveTask);
   }
 
   FutureOr<void> _onAddTask(AddTask event, Emitter<TasksState> emit) {
     debugPrint('TasksBloc: AddTask event is handled');
-    emit(TasksState(allTasks: List.from(state.allTasks)..add(event.task)));
+    emit(TasksState(
+      allTasks: List.from(state.allTasks)..add(event.task),
+      removedTasks: state.removedTasks,
+    ));
     // final state = this.state;
     // emit(TasksState(allTasks: List.from(state.allTasks)..add(event.task)));
   }
@@ -35,13 +40,23 @@ class TasksBloc extends HydratedBloc<TasksEvent, TasksState> {
             index,
             event.task.copyWith(isDone: !event.task.isDone),
           ),
+        removedTasks: state.removedTasks,
       ),
     );
   }
 
   FutureOr<void> _onDeleteTask(DeleteTask event, Emitter<TasksState> emit) {
     debugPrint('TasksBloc: DeleteTask event is handled');
-    emit(TasksState(allTasks: List.from(state.allTasks)..remove(event.task)));
+    emit(TasksState(allTasks: state.allTasks,
+    removedTasks: List.from(state.removedTasks)..remove(event.task),));
+  }
+
+  FutureOr<void> _onRemoveTask(RemoveTask event, Emitter<TasksState> emit) {
+    debugPrint('TasksBloc: DeleteTask event is handled');
+    emit(TasksState(
+      allTasks: List.from(state.allTasks)..remove(event.task),
+      removedTasks: List.from(state.removedTasks)..add(event.task.copyWith(isDeleted: true)),
+    ));
   }
 
   @override

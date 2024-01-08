@@ -8,10 +8,16 @@ class TaskTile extends StatelessWidget {
 
   const TaskTile({super.key, required this.task});
 
+  void _removeOrDeleteTask(BuildContext context, Task task) {
+    task.isDeleted
+        ? context.read<TasksBloc>().add(DeleteTask(task: task))
+        : context.read<TasksBloc>().add(RemoveTask(task: task));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      onDismissed: (_) => context.read<TasksBloc>().add(DeleteTask(task: task)),
+      onDismissed: (_) => _removeOrDeleteTask(context, task),
       key: ValueKey(task.id),
       child: ListTile(
         title: Text(
@@ -21,7 +27,7 @@ class TaskTile extends StatelessWidget {
           ),
         ),
         trailing: Checkbox(
-          onChanged: (_) => context.read<TasksBloc>().add(UpdateTask(task: task)),
+          onChanged: !task.isDeleted ? (_) => context.read<TasksBloc>().add(UpdateTask(task: task)) : null,
           value: task.isDone,
         ),
       ),
