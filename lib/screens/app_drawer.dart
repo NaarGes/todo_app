@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/screens/recycle_bin_screen.dart';
-import 'package:todo_app/screens/tasks_screen.dart';
+import 'package:todo_app/screens/tabs_screen.dart';
+import 'package:todo_app/screens/pending_tasks_screen.dart';
 
 import '../blocs/bloc_exports.dart';
 
@@ -22,7 +23,7 @@ class AppDrawer extends StatelessWidget {
             BlocBuilder<TasksBloc, TasksState>(
               builder: (context, state) {
                 return GestureDetector(
-                  onTap: () => Navigator.of(context).pushReplacementNamed(TasksScreen.id),
+                  onTap: () => Navigator.of(context).pushReplacementNamed(TabsScreen.id),
                   child: ListTile(
                     leading: const Icon(Icons.folder_special),
                     title: const Text('My Tasks'),
