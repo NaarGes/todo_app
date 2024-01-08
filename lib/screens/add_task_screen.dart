@@ -8,6 +8,7 @@ class AddTaskScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController titleController = TextEditingController();
+    TextEditingController descriptionController = TextEditingController();
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
@@ -25,17 +26,49 @@ class AddTaskScreen extends StatelessWidget {
             ),
             autofocus: true,
           ),
+          const SizedBox(height: 10),
+          TextField(
+            controller: descriptionController,
+            minLines: 3,
+            maxLines: 5,
+            decoration: const InputDecoration(
+              label: Text('Description'),
+              border: OutlineInputBorder(),
+            ),
+            autofocus: true,
+          ),
+          const SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              TextButton(onPressed: () => Navigator.pop(context), child: const Text('cancel')),
-              ElevatedButton(
-                onPressed: () {
-                  final task = Task(title: titleController.text);
-                  context.read<TasksBloc>().add(AddTask(task: task));
-                  Navigator.pop(context);
-                },
-                child: const Text('Add'),
+              Expanded(
+                child: TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('cancel'),
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {
+                    if (titleController.text.isEmpty || descriptionController.text.isEmpty) {
+                      Navigator.of(context).pop();
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text('Title and Description cannot be empty!'),
+                        behavior: SnackBarBehavior.floating,
+                        duration: Duration(seconds: 1),
+                      ));
+                      return;
+                    }
+                    final task = Task(
+                      title: titleController.text,
+                      description: descriptionController.text,
+                    );
+                    context.read<TasksBloc>().add(AddTask(task: task));
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Add'),
+                ),
               ),
             ],
           ),

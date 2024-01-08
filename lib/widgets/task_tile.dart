@@ -24,10 +24,12 @@ class TaskTile extends StatelessWidget {
           task.title,
           style: TextStyle(
             decoration: task.isDone ? TextDecoration.lineThrough : null,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
         trailing: Checkbox(
-          onChanged: !task.isDeleted ? (_) => context.read<TasksBloc>().add(UpdateTask(task: task)) : null,
+          onChanged:
+              !task.isDeleted ? (_) => context.read<TasksBloc>().add(UpdateTask(task: task)) : null,
           value: task.isDone,
         ),
       ),
