@@ -3,12 +3,14 @@ import 'package:todo_app/models/task.dart';
 
 class PopupMenu extends StatelessWidget {
   final Task task;
+  final VoidCallback likeOrDislike;
   final VoidCallback cancelOrDeleteCallback;
 
   const PopupMenu({
     super.key,
-    required this.cancelOrDeleteCallback,
     required this.task,
+    required this.likeOrDislike,
+    required this.cancelOrDeleteCallback,
   });
 
   @override
@@ -25,12 +27,16 @@ class PopupMenu extends StatelessWidget {
                 onTap: () {},
               ),
               PopupMenuItem(
+                onTap: likeOrDislike,
                 child: TextButton.icon(
                   onPressed: null,
-                  icon: const Icon(Icons.bookmark),
-                  label: const Text('Add to Bookmark'),
+                  icon: task.isFavorite
+                      ? const Icon(Icons.bookmark_remove)
+                      : const Icon(Icons.bookmark_add_outlined),
+                  label: task.isFavorite
+                      ? const Text('Remove from Bookmarks')
+                      : const Text('Add to Bookmark'),
                 ),
-                onTap: () {},
               ),
               PopupMenuItem(
                 onTap: cancelOrDeleteCallback,
