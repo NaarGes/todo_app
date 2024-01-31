@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_app/screens/edit_task_screen.dart';
 import 'package:todo_app/widgets/popup_menu.dart';
 
 import '../blocs/bloc_exports.dart';
@@ -14,6 +15,21 @@ class TaskTile extends StatelessWidget {
     task.isDeleted
         ? context.read<TasksBloc>().add(DeleteTask(task: task))
         : context.read<TasksBloc>().add(RemoveTask(task: task));
+  }
+
+  void _editTask(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: EditTaskScreen(oldTask: task),
+        ),
+      ),
+    );
   }
 
   @override
@@ -47,6 +63,7 @@ class TaskTile extends StatelessWidget {
           ),
           PopupMenu(
             task: task,
+            editCallback: () => _editTask(context),
             likeOrDislike: () => context.read<TasksBloc>().add(
                   MarkFavoriteOrUnFavoriteTask(task: task),
                 ),
