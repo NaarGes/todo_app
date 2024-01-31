@@ -5,20 +5,20 @@ import 'package:todo_app/services/app_router.dart';
 import 'package:todo_app/services/app_theme.dart';
 
 import 'blocs/bloc_exports.dart';
-import 'screens/pending_tasks_screen.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  HydratedBloc.storage = await HydratedStorage.build(
-    storageDirectory: await getApplicationDocumentsDirectory(),
+  await _init();
+  runApp(
+    App(
+      router: AppRouter(),
+    ),
   );
-  runApp(MyApp(router: AppRouter()));
 }
 
-class MyApp extends StatelessWidget {
+class App extends StatelessWidget {
   final AppRouter router;
 
-  const MyApp({Key? key, required this.router}) : super(key: key);
+  const App({Key? key, required this.router}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,4 +42,11 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> _init() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: await getApplicationDocumentsDirectory(),
+  );
 }

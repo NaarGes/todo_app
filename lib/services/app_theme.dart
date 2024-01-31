@@ -6,7 +6,10 @@ enum AppTheme {
 }
 
 class AppThemes {
-  static final appThemeData = {
+  static final Map<AppTheme, ThemeData> appThemeData = {
+
+    /// dark theme
+    ///
     AppTheme.darkTheme: ThemeData(
       primarySwatch: Colors.grey,
       primaryColor: Colors.black,
@@ -28,9 +31,9 @@ class AppThemes {
           backgroundColor: Colors.grey, unselectedItemColor: Colors.white),
     ),
 
-    //
-    //
 
+    /// light theme
+    ///
     AppTheme.lightTheme: ThemeData(
       primarySwatch: Colors.grey,
       primaryColor: Colors.white,
